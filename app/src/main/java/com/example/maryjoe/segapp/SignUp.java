@@ -26,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.maryjoe.segapp.SignIn.EXTRA_MESSAGE;
 
-public class SignUp extends AppCompatActivity {
+public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference database;
 
@@ -36,7 +36,7 @@ public class SignUp extends AppCompatActivity {
 
     public static ProgressBar progBar;
 
-    public static EditText editTextusername,editTextname,editTextemail,editTextpassword,editTextconfpass;
+    public static EditText editTextusername, editTextname, editTextemail, editTextpassword, editTextconfpass;
 
     public static boolean adminFlag = false;
 
@@ -137,6 +137,15 @@ public class SignUp extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button3:
+                registerUser();
+                break;
+        }
     }
 
     public void goToWelcome(View view) {

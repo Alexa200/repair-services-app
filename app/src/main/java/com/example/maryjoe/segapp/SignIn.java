@@ -16,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class SignIn extends AppCompatActivity implements View.OnClickListener{
+public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
 
     public static final String EXTRA_MESSAGE = "com.example.HomeRepairService.MESSAGE";
