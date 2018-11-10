@@ -162,47 +162,49 @@ public class SignUp extends AppCompatActivity {
         EditText editTextName = (EditText) findViewById(R.id.nameTextField);
         nameOfUser = editTextName.getText().toString();
 
-        database.child("Admin").child(nameOfUser);
-
         EditText editTextEmail = (EditText) findViewById(R.id.emailTextField);
         emailOfUser = editTextEmail.getText().toString();
-
-        database.child("Admin").child(nameOfUser).child("Email").setValue(emailOfUser);
 
         EditText editTextUserName = (EditText) findViewById(R.id.usernameTextField);
         usernameOfUser = editTextUserName.getText().toString();
 
-        database.child("Admin").child(nameOfUser).child("Username").setValue(usernameOfUser);
-
         EditText editTextPassword = (EditText) findViewById(R.id.passwordTextField);
         passwordOfUser = editTextPassword.getText().toString();
 
-        database.child("Admin").child(nameOfUser).child("Password").setValue(passwordOfUser);
+        database.child("Users").child(usernameOfUser);
+        database.child("Users").child(usernameOfUser).child("Name").setValue(nameOfUser);
+        database.child("Users").child(usernameOfUser).child("Account Type").setValue(accountType);
+        database.child("Users").child(usernameOfUser).child("Email").setValue(emailOfUser);
+        database.child("Users").child(usernameOfUser).child("Password").setValue(passwordOfUser);
+        database.child("Users").child(usernameOfUser).child("Service Type").setValue(null);
+        database.child("Users").child(usernameOfUser).child("Price of Service").setValue(null);
+
     }
 
     public void homeOwnerClick(View view) {
         registerUser();
         accountType = "Homeowner";
 
+        EditText editTextUserName = (EditText) findViewById(R.id.usernameTextField);
+        usernameOfUser = editTextUserName.getText().toString();
+
         EditText editTextName = (EditText) findViewById(R.id.nameTextField);
         nameOfUser = editTextName.getText().toString();
-
-        database.child("Homeowner").child(nameOfUser);
 
         EditText editTextEmail = (EditText) findViewById(R.id.emailTextField);
         emailOfUser = editTextEmail.getText().toString();
 
-        database.child("Homeowner").child(nameOfUser).child("Email").setValue(emailOfUser);
-
-        EditText editTextUserName = (EditText) findViewById(R.id.usernameTextField);
-        usernameOfUser = editTextUserName.getText().toString();
-
-        database.child("Homeowner").child(nameOfUser).child("Username").setValue(usernameOfUser);
-
         EditText editTextPassword = (EditText) findViewById(R.id.passwordTextField);
         passwordOfUser = editTextPassword.getText().toString();
 
-        database.child("Homeowner").child(nameOfUser).child("Password").setValue(passwordOfUser);
+        database.child("Users").child(usernameOfUser);
+        database.child("Users").child(usernameOfUser).child("Name").setValue(nameOfUser);
+        database.child("Users").child(usernameOfUser).child("Account Type").setValue(accountType);
+        database.child("Users").child(usernameOfUser).child("Email").setValue(emailOfUser);
+        database.child("Users").child(usernameOfUser).child("Password").setValue(passwordOfUser);
+        database.child("Users").child(usernameOfUser).child("Service Type").setValue(null);
+        database.child("Users").child(usernameOfUser).child("Price of Service").setValue(null);
+
     }
 
     public void serviceProviderClick(View view) {
@@ -215,32 +217,29 @@ public class SignUp extends AppCompatActivity {
         EditText editTextName = (EditText) findViewById(R.id.nameTextField);
         nameOfUser = editTextName.getText().toString();
 
-        database.child("Service Provider").child(nameOfUser);
-
         EditText editTextEmail = (EditText) findViewById(R.id.emailTextField);
         emailOfUser = editTextEmail.getText().toString();
-
-        database.child("Service Provider").child(nameOfUser).child("Email").setValue(emailOfUser);
 
         EditText editTextUserName = (EditText) findViewById(R.id.usernameTextField);
         usernameOfUser = editTextUserName.getText().toString();
 
-        database.child("Service Provider").child(nameOfUser).child("Username").setValue(usernameOfUser);
-
         EditText editTextPassword = (EditText) findViewById(R.id.passwordTextField);
         passwordOfUser = editTextPassword.getText().toString();
 
-        database.child("Service Provider").child(nameOfUser).child("Password").setValue(passwordOfUser);
 
         EditText editTextService = (EditText) findViewById(R.id.serviceTypeField);
         serviceType = editTextService.getText().toString();
 
-        database.child("Service Provider").child(nameOfUser).child("Service Type").setValue(serviceType);
-
         EditText editTextPrice = (EditText) findViewById(R.id.priceField);
         priceOfService = editTextPrice.getText().toString();
 
-        database.child("Service Provider").child(nameOfUser).child("Price of Service").setValue(priceOfService);
+        database.child("Users").child(usernameOfUser);
+        database.child("Users").child(usernameOfUser).child("Name").setValue(nameOfUser);
+        database.child("Users").child(usernameOfUser).child("Account Type").setValue(accountType);
+        database.child("Users").child(usernameOfUser).child("Email").setValue(emailOfUser);
+        database.child("Users").child(usernameOfUser).child("Password").setValue(passwordOfUser);
+        database.child("Users").child(usernameOfUser).child("Service Type").setValue(serviceType);
+        database.child("Users").child(usernameOfUser).child("Price of Service").setValue(priceOfService);
     }
 
     public static String getNameOfUser() {
