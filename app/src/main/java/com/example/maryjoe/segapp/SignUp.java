@@ -26,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.maryjoe.segapp.SignIn.EXTRA_MESSAGE;
 
-public class SignUp extends AppCompatActivity implements View.OnClickListener {
+public class SignUp extends AppCompatActivity {
 
     public static DatabaseReference database;
 
@@ -62,7 +62,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         progBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        findViewById(R.id.button3).setOnClickListener(this);
+        // findViewById(R.id.button3).setOnClickListener(this);
 
     }
 
@@ -139,16 +139,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.button3:
-                registerUser();
-                break;
-
-        }
-    }
-
     public void goToWelcome(View view) {
         if (adminFlag) {
             // opens a new activity when you sign up
@@ -165,25 +155,33 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void adminClick(View view) {
-        onClick(view);
+        registerUser();
         adminFlag = true;
         accountType = "Admin";
 
         EditText editTextName = (EditText) findViewById(R.id.nameTextField);
         nameOfUser = editTextName.getText().toString();
 
+        database.child("Admin").child(nameOfUser);
+
         EditText editTextEmail = (EditText) findViewById(R.id.emailTextField);
         emailOfUser = editTextEmail.getText().toString();
+
+        database.child("Admin").child(nameOfUser).child("Email").setValue(emailOfUser);
 
         EditText editTextUserName = (EditText) findViewById(R.id.usernameTextField);
         usernameOfUser = editTextUserName.getText().toString();
 
+        database.child("Admin").child(nameOfUser).child("Username").setValue(usernameOfUser);
+
         EditText editTextPassword = (EditText) findViewById(R.id.passwordTextField);
         passwordOfUser = editTextPassword.getText().toString();
+
+        database.child("Admin").child(nameOfUser).child("Password").setValue(passwordOfUser);
     }
 
     public void homeOwnerClick(View view) {
-        onClick(view);
+        registerUser();
         accountType = "Homeowner";
 
         EditText editTextName = (EditText) findViewById(R.id.nameTextField);
@@ -208,7 +206,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void serviceProviderClick(View view) {
-        onClick(view);
+        registerUser();
         accountType = "Service Provider";
 
         LinearLayout serviceProLay = (LinearLayout) findViewById(R.id.serviceProviderLayout);
