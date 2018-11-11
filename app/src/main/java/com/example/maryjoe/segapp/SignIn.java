@@ -14,6 +14,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class SignIn extends AppCompatActivity implements View.OnClickListener {
@@ -24,17 +29,59 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth2;
     EditText editTextemail, editTextpassword;
     ProgressBar progBar;
+
+    // used to determine if user is admin
+    public static DatabaseReference mDatabase;
+    public static FirebaseDatabase mFirebaseDatabase;
+    public static FirebaseAuth mAuth;
+    EditText usernameTextEdit;
+    String userLoggingIn;
+
+    Boolean adminFlag;
+
+    public static UserInformation uInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
 
-        editTextemail = (EditText) findViewById(R.id.signInEmail);
+        editTextemail = (EditText) findViewById(R.id.signInUsername);
         editTextpassword = (EditText) findViewById(R.id.signInPassword);
         progBar = (ProgressBar) findViewById(R.id.progressBar);
         mAuth2 = FirebaseAuth.getInstance();
 
+        // initilizing what will be used to determine if user is admin
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabase = mFirebaseDatabase.getReference();
+
+        usernameTextEdit = (EditText) findViewById(R.id.signInUsername);
+        userLoggingIn = usernameTextEdit.getText().toString();
+
         findViewById(R.id.btnSignIn).setOnClickListener(this);
+
+        adminFlag = false;
+
+        // this gets a snapshot of database at this time
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                showData(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void showData(DataSnapshot dataSnapshot) {
+        for (DataSnapshot ds: dataSnapshot.getChildren()) {
+            UserInformation uInfo = new UserInformation();
+            uInfo.setAccountType(ds.child(userLoggingIn).getValue(UserInformation.class).getAccountType());
+        }
     }
 
     private void userLogin() {
@@ -96,19 +143,25 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     public void goToSignUp(View view){
         // opens a new activity when the sign up button is pushed
         Intent intent = new Intent(this, SignUp.class);
-        EditText editText = (EditText) findViewById(R.id.signInEmail);
+        EditText editText = (EditText) findViewById(R.id.signInUsername);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
 
     public void goToWelcome(View view) {
-        // opens a new activity when the sign in button is pushed
-        Intent intent = new Intent(this, WelcomePage.class);
-        EditText editText = (EditText) findViewById(R.id.signInEmail);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
+        if (uInfo.getAccountType().equals("Admin")) {
+            // opens a new activity when you sign up
+            Intent intent = new Intent(this, AdminHome.class);
+            startActivity(intent);
+        } else {
+            // opens a new activity when the sign in button is pushed
+            Intent intent = new Intent(this, WelcomePage.class);
+            EditText editText = (EditText) findViewById(R.id.signInUsername);
+            String message = editText.getText().toString();
+            intent.putExtra(EXTRA_MESSAGE, message);
+            startActivity(intent);
+        }
     }
 
 
