@@ -15,6 +15,8 @@ public class AdminAddUser extends AppCompatActivity {
 
     public static String serviceType, priceOfService;
 
+    EditText nameOfService, priceofService;
+
     public static DatabaseReference database;
 
     @Override
@@ -23,6 +25,32 @@ public class AdminAddUser extends AppCompatActivity {
         setContentView(R.layout.admin_add_user);
 
         database = FirebaseDatabase.getInstance().getReference();
+    }
+
+    public void addService(){
+        String service = nameOfService.getText().toString().trim();
+        String price = priceofService.getText().toString().trim();
+        Float p = Float.parseFloat(price);
+
+        if(service.isEmpty()){
+            nameOfService.setError("Service name is needed");
+            nameOfService.requestFocus();
+            return;
+        }
+
+        if(price.isEmpty()){
+            priceofService.setError("Price is needed");
+            priceofService.requestFocus();
+            return;
+        }
+
+        if(!(p instanceof Float) ){
+            priceofService.setError("Incorrect input. Has to be a decimal number");
+            priceofService.requestFocus();
+            return;
+        }
+
+
     }
 
     public void signOutButton(View v){
@@ -47,5 +75,13 @@ public class AdminAddUser extends AppCompatActivity {
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+    }
+
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.addService:
+                addService();
+                break;
+        }
     }
 }
