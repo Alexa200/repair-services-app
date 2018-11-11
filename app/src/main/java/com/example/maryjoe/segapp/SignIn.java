@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -41,7 +42,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
     Boolean adminFlag;
 
-    public static UserInformation uInfo;
+    public String account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +66,14 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
         adminFlag = false;
 
-        // this gets a snapshot of database at this time
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(emailLoggingIn).child("Account Type");
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-                showData(dataSnapshot);
+                account = dataSnapshot.getValue(String.class);
+                if (account.equals("Admin")) {
+                    adminFlag = true;
+                }
             }
 
             @Override
@@ -79,6 +81,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
             }
         });
+
     }
 
     private void showData(DataSnapshot dataSnapshot) {
@@ -154,7 +157,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void goToWelcome(View view) {
-        if ( .equals("Admin")) {
+        if (account.equals("Admin")) {
             // opens a new activity when you sign up
             Intent intent = new Intent(this, AdminHome.class);
             startActivity(intent);
