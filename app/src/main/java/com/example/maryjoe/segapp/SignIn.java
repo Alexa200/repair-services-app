@@ -22,6 +22,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+
 
 public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,9 +44,9 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     EditText emailTextEdit;
     String emailLoggingIn;
 
-    Boolean adminFlag;
+    public ArrayList<String> account = new ArrayList<>();
 
-    public String account;
+    public static ArrayList<Long> arrayUsers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,32 +68,24 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
         findViewById(R.id.btnSignIn).setOnClickListener(this);
 
-        adminFlag = false;
-
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(emailLoggingIn).child("Account Type");
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                account = dataSnapshot.getValue(String.class);
-                if (account.equals("Admin")) {
-                    adminFlag = true;
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    account.add(postSnapshot.getValue().toString());
                 }
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.w("failTAG", "loadPost:onCancelled", databaseError.toException());
             }
-        });
-
+        };
+        mDatabase.addValueEventListener(postListener);
     }
 
-    private void showData(DataSnapshot dataSnapshot) {
-        for (DataSnapshot ds: dataSnapshot.getChildren()) {
-            UserInformation uInfo = new UserInformation();
-            uInfo.setAccountType(ds.child(emailLoggingIn).getValue(UserInformation.class).getAccountType());
-        }
-    }
 
     private void userLogin() {
 
@@ -140,10 +136,17 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btnSignIn:
-                userLogin();
-                break;
+        if (Arrays.asList(arrayUsers).contains(emailLoggingIn)) {
+            Log.d("ACCOUNT TYPE", "PLs work thx");
+            // opens a new activity when you sign up
+            Intent intent = new Intent(this, AdminHome.class);
+            startActivity(intent);
+        } else {
+            switch (v.getId()) {
+                case R.id.btnSignIn:
+                    userLogin();
+                    break;
+            }
         }
     }
 

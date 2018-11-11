@@ -174,14 +174,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         EditText editTextPassword = (EditText) findViewById(R.id.passwordTextField);
         passwordOfUser = editTextPassword.getText().toString();
 
-        database.child("Users").child(emailOfUser);
-        database.child("Users").child(emailOfUser).child("Name").setValue(nameOfUser);
-        database.child("Users").child(emailOfUser).child("Account Type").setValue(accountType);
-        database.child("Users").child(emailOfUser).child("Email").setValue(usernameOfUser);
-        database.child("Users").child(emailOfUser).child("Password").setValue(passwordOfUser);
-        database.child("Users").child(emailOfUser).child("Service Type").setValue(null);
-        database.child("Users").child(emailOfUser).child("Price of Service").setValue(null);
-
+        database.child("Users").child(nameOfUser);
+        database.child("Users").child(nameOfUser).child("Email").setValue(emailOfUser);
+        database.child("Users").child(nameOfUser).child("Account Type").setValue(accountType);
+        database.child("Users").child(nameOfUser).child("Username").setValue(usernameOfUser);
+        database.child("Users").child(nameOfUser).child("Password").setValue(passwordOfUser);
+        database.child("Users").child(nameOfUser).child("Service Type").setValue(null);
+        database.child("Users").child(nameOfUser).child("Price of Service").setValue(null);
     }
 
     public void homeOwnerClick(View view) {
@@ -199,13 +198,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         EditText editTextPassword = (EditText) findViewById(R.id.passwordTextField);
         passwordOfUser = editTextPassword.getText().toString();
 
-        database.child("Users").child(emailOfUser);
-        database.child("Users").child(emailOfUser).child("Name").setValue(nameOfUser);
-        database.child("Users").child(emailOfUser).child("Account Type").setValue(accountType);
-        database.child("Users").child(emailOfUser).child("Email").setValue(usernameOfUser);
-        database.child("Users").child(emailOfUser).child("Password").setValue(passwordOfUser);
-        database.child("Users").child(emailOfUser).child("Service Type").setValue(null);
-        database.child("Users").child(emailOfUser).child("Price of Service").setValue(null);
+        database.child("Users").child(nameOfUser);
+        database.child("Users").child(nameOfUser).child("Email").setValue(emailOfUser);
+        database.child("Users").child(nameOfUser).child("Account Type").setValue(accountType);
+        database.child("Users").child(nameOfUser).child("Username").setValue(usernameOfUser);
+        database.child("Users").child(nameOfUser).child("Password").setValue(passwordOfUser);
+        database.child("Users").child(nameOfUser).child("Service Type").setValue(null);
+        database.child("Users").child(nameOfUser).child("Price of Service").setValue(null);
     }
 
     public void serviceProviderClick(View view) {
@@ -233,13 +232,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         EditText editTextPrice = (EditText) findViewById(R.id.priceField);
         priceOfService = editTextPrice.getText().toString();
 
-        database.child("Users").child(emailOfUser);
-        database.child("Users").child(emailOfUser).child("Name").setValue(nameOfUser);
-        database.child("Users").child(emailOfUser).child("Account Type").setValue(accountType);
-        database.child("Users").child(emailOfUser).child("Email").setValue(usernameOfUser);
-        database.child("Users").child(emailOfUser).child("Password").setValue(passwordOfUser);
-        database.child("Users").child(emailOfUser).child("Service Type").setValue(serviceType);
-        database.child("Users").child(emailOfUser).child("Price of Service").setValue(priceOfService);
+        database.child("Users").child(nameOfUser);
+        database.child("Users").child(nameOfUser).child("Email").setValue(emailOfUser);
+        database.child("Users").child(nameOfUser).child("Account Type").setValue(accountType);
+        database.child("Users").child(nameOfUser).child("Username").setValue(usernameOfUser);
+        database.child("Users").child(nameOfUser).child("Password").setValue(passwordOfUser);
+        database.child("Users").child(nameOfUser).child("Service Type").setValue(serviceType);
+        database.child("Users").child(nameOfUser).child("Price of Service").setValue(priceOfService);
     }
 
     public static String getNameOfUser() {
