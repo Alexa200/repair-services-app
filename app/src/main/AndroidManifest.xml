@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".SignUp" />
         <activity android:name=".WelcomePage" />
+        <activity android:name=".AdminHome" />
+        <activity android:name=".AdminAddUser"/>
     </application>
 
 </manifest>

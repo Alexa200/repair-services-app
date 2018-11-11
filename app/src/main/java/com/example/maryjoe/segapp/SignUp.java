@@ -47,11 +47,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         database = FirebaseDatabase.getInstance().getReference();
 
-        if (adminFlag) {
-            Button adminButton = (Button) findViewById(R.id.admin);
-            adminButton.setVisibility(View.INVISIBLE);
-        }
-
         editTextname = (EditText) findViewById(R.id.nameTextField);
         editTextusername = (EditText) findViewById(R.id.usernameTextField);
         editTextemail = (EditText) findViewById(R.id.emailTextField);
@@ -149,7 +144,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void goToWelcome(View view) {
-        if (adminFlag) {
+        if (accountType.equals("Admin")) {
             // opens a new activity when you sign up
             Intent intent = new Intent(this, AdminHome.class);
             startActivity(intent);
@@ -164,7 +159,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void adminClick(View view) {
-        registerUser();
         adminFlag = true;
         accountType = "Admin";
 
@@ -191,7 +185,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void homeOwnerClick(View view) {
-        registerUser();
         accountType = "Homeowner";
 
         EditText editTextUserName = (EditText) findViewById(R.id.usernameTextField);
@@ -217,7 +210,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void serviceProviderClick(View view) {
-        registerUser();
         accountType = "Service Provider";
 
         LinearLayout serviceProLay = (LinearLayout) findViewById(R.id.serviceProviderLayout);
