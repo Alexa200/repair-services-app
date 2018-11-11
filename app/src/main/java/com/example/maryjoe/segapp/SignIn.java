@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -34,8 +35,9 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     public static DatabaseReference mDatabase;
     public static FirebaseDatabase mFirebaseDatabase;
     public static FirebaseAuth mAuth;
-    EditText usernameTextEdit;
-    String userLoggingIn;
+
+    EditText emailTextEdit;
+    String emailLoggingIn;
 
     Boolean adminFlag;
 
@@ -46,7 +48,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
 
-        editTextemail = (EditText) findViewById(R.id.signInUsername);
+        editTextemail = (EditText) findViewById(R.id.signInEmail);
         editTextpassword = (EditText) findViewById(R.id.signInPassword);
         progBar = (ProgressBar) findViewById(R.id.progressBar);
         mAuth2 = FirebaseAuth.getInstance();
@@ -56,8 +58,8 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabase = mFirebaseDatabase.getReference();
 
-        usernameTextEdit = (EditText) findViewById(R.id.signInUsername);
-        userLoggingIn = usernameTextEdit.getText().toString();
+        emailTextEdit = (EditText) findViewById(R.id.signInEmail);
+        emailLoggingIn = emailTextEdit.getText().toString();
 
         findViewById(R.id.btnSignIn).setOnClickListener(this);
 
@@ -67,6 +69,8 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: " + value);
                 showData(dataSnapshot);
             }
 
@@ -80,7 +84,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     private void showData(DataSnapshot dataSnapshot) {
         for (DataSnapshot ds: dataSnapshot.getChildren()) {
             UserInformation uInfo = new UserInformation();
-            uInfo.setAccountType(ds.child(userLoggingIn).getValue(UserInformation.class).getAccountType());
+            uInfo.setAccountType(ds.child(emailLoggingIn).getValue(UserInformation.class).getAccountType());
         }
     }
 
@@ -143,21 +147,21 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     public void goToSignUp(View view){
         // opens a new activity when the sign up button is pushed
         Intent intent = new Intent(this, SignUp.class);
-        EditText editText = (EditText) findViewById(R.id.signInUsername);
+        EditText editText = (EditText) findViewById(R.id.signInEmail);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
 
     public void goToWelcome(View view) {
-        if (uInfo.getAccountType().equals("Admin")) {
+        if ( .equals("Admin")) {
             // opens a new activity when you sign up
             Intent intent = new Intent(this, AdminHome.class);
             startActivity(intent);
         } else {
             // opens a new activity when the sign in button is pushed
             Intent intent = new Intent(this, WelcomePage.class);
-            EditText editText = (EditText) findViewById(R.id.signInUsername);
+            EditText editText = (EditText) findViewById(R.id.signInEmail);
             String message = editText.getText().toString();
             intent.putExtra(EXTRA_MESSAGE, message);
             startActivity(intent);
