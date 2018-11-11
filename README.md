@@ -1,9 +1,13 @@
-# Home-Repair-Service
-SEG Android Project (20% of final mark)
+# Home Repair Service Android App
 
-Marie Joe Sannan 
-Marissa Phul
-Margaret Ajibola
-Omade Ookwoor
+Goal
+- Homeowners can search for service providers for general home repair jobs
 
-GitHub Link: https://github.com/msann027/Home-Repair-Service/tree/master
+Functionality
+- Admin can create and edit services 
+- Connected to Firebase authentication and realtime database
+
+Up Next
+- Homeowner and service provider functionality as currently homeowner and service provider login/sign up redirects to generic welcome page
+
+Created for Introduction to Software Engineering course group project.
